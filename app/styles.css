@@ -1,11 +1,18 @@
+@import url("https://use.typekit.net/whx1zml.css");
+
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    margin: 20px;
-    padding: 0;
+    font-family: flegrei, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;    /* Center vertically */
+    height: 100vh;
+    color: #005FA6;
 }
 
 h1 {
@@ -50,12 +57,6 @@ ul {
     box-sizing: border-box;
 }
 
-body {
-    font-family: sans-serif;
-    margin: 20px;
-    padding: 0;
-}
-
 .square {
     background: #fff;
     border: 1px solid #999;
@@ -63,12 +64,12 @@ body {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 120px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 120px;
 }
 
 .board-row:after {

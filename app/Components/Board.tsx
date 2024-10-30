@@ -40,7 +40,7 @@ export default function Board(){
 
     return (
         <div>
-            <div className="status">{status}</div>
+            <h1 style={{textAlign:"center"}}>Tic-Tac-Toe Mini-Game</h1>
             <div className="board-row">
                 <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
                 <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
@@ -56,6 +56,7 @@ export default function Board(){
                 <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
                 <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </div>
+            <div className="status">{status}</div>
         </div>
     );
 }
