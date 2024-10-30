@@ -1,5 +1,6 @@
 "use client";
-// @ts-expect-error
+
+// @ts-expect-error: props are implicitly typed here
 function Square({value, onSquareClick }) {
 
     return (
