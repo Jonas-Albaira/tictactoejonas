@@ -1,5 +1,5 @@
 "use client";
-// @ts-ignore
+// @ts-expect-error
 function Square({value, onSquareClick }) {
 
     return (

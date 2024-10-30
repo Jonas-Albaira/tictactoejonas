@@ -60,7 +60,7 @@ export default function Board(){
     );
 }
 
-function calculateWinner(squares : any[]){
+function calculateWinner(squares: (string | null)[]){
 
     //all possible winning combinations
     const lines = [
