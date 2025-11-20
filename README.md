@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎮 Tic-Tac-Toe Mini-Game  
+### _A simple interactive Tic-Tac-Toe game built with React and TypeScript._
 
-## Getting Started
+This project implements a **classic Tic-Tac-Toe** game where two players take turns marking "X" or "O" on a 3x3 grid. The game automatically detects a winner or indicates the next player’s turn.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Interactive 3x3 board  
+- Clickable squares for X or O  
+- Automatic win detection for all combinations: rows, columns, diagonals  
+- Dynamic status display: shows the next player or the winner  
+- Lightweight, client-side React implementation  
+- TypeScript support  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🕹️ How to Play
 
-## Learn More
+1. Open the game in the browser.  
+2. Click on an empty square to place your mark ("X" or "O").  
+3. Players alternate turns.  
+4. The game detects a winner as soon as a row, column, or diagonal is filled.  
+5. If all squares are filled and there is no winner, the game ends in a draw.  
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧩 How It Works
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Board Component
 
-## Deploy on Vercel
+- Maintains **game state** using React `useState`:
+  - `squares` — array of 9 elements representing the board  
+  - `xIsNext` — boolean tracking whose turn it is  
+- `handleClick(i)` updates the state when a square is clicked, unless the square is already filled or the game has a winner.  
+- `calculateWinner(squares)` checks all possible winning combinations.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```ts
+const winner = calculateWinner(squares);
+let status = winner ? "Winner: " + winner : "Next player: " + (xIsNext ? "X" : "O");
