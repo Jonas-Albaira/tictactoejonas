@@ -1,69 +1,70 @@
 "use client";
 
 import Square from "@/app/Components/Square";
-import {useState} from "react";
+import { useState } from "react";
 
-export default function Board(){
-
+export default function Board() {
     const [xIsNext, setXIsNext] = useState(true);
-    const [squares, setSquares] = useState(Array(9).fill(null));
+    const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
 
-    function handleClick(i: number){
+    function handleClick(i: number) {
+        if (squares[i] || calculateWinner(squares)) return;
 
-        if (squares[i] || calculateWinner(squares)) {
-            return;
-        }
-
-        const nextSquares = squares.slice(); //creates copy of array
-        nextSquares[i] = "X"; // assigns first element as X?
-
-        if (xIsNext) {
-            nextSquares[i] = "X";
-        } else {
-            nextSquares[i] = "O";
-        }
-
+        const nextSquares = squares.slice();
+        nextSquares[i] = xIsNext ? "X" : "O";
         setSquares(nextSquares);
         setXIsNext(!xIsNext);
-
     }
 
-    const winner = calculateWinner(squares);
+    function handleReset() {
+        setSquares(Array(9).fill(null));
+        setXIsNext(true);
+    }
 
-    let status;
+    const result = calculateWinner(squares);
+    const winner = result?.winner ?? null;
+    const winningSquares = result?.line ?? [];
+    const isDraw = !winner && squares.every(Boolean);
+
+    let statusText: string;
+    let statusClass: string;
     if (winner) {
-        status = "Winner: " + winner;
+        statusText = `Player ${winner} wins!`;
+        statusClass = "status winner";
+    } else if (isDraw) {
+        statusText = "It's a draw!";
+        statusClass = "status draw";
     } else {
-        status = "Next player: " + (xIsNext ? "X" : "O");
+        statusText = `Player ${xIsNext ? "X" : "O"}'s turn`;
+        statusClass = "status";
     }
-
 
     return (
-        <div>
-            <h1 style={{textAlign:"center"}}>Tic-Tac-Toe Mini-Game</h1>
-            <div className="board-row">
-                <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
-                <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
-                <Square value={squares[2]} onSquareClick={() => handleClick(2)}/>
+        <div className="game-container">
+            <h1 className="game-title">Tic-Tac-Toe</h1>
+
+            <div className={statusClass}>{statusText}</div>
+
+            <div className="board">
+                {squares.map((val, i) => (
+                    <Square
+                        key={i}
+                        value={val}
+                        isWinning={winningSquares.includes(i)}
+                        onSquareClick={() => handleClick(i)}
+                        disabled={!!val || !!winner || isDraw}
+                    />
+                ))}
             </div>
-            <div className="board-row">
-                <Square value={squares[3]} onSquareClick={() => handleClick(3)}/>
-                <Square value={squares[4]} onSquareClick={() => handleClick(4)}/>
-                <Square value={squares[5]} onSquareClick={() => handleClick(5)}/>
-            </div>
-            <div className="board-row">
-                <Square value={squares[6]} onSquareClick={() => handleClick(6)}/>
-                <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
-                <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
-            </div>
-            <div className="status">{status}</div>
+
+            <button className="reset-btn" onClick={handleReset}>
+                New Game
+            </button>
         </div>
     );
 }
 
-function calculateWinner(squares: (string | null)[]){
-
-    //all possible winning combinations
+function calculateWinner(squares: (string | null)[]): { winner: string; line: number[] } | null {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -72,20 +73,13 @@ function calculateWinner(squares: (string | null)[]){
         [1, 4, 7],
         [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6]
+        [2, 4, 6],
     ];
 
-    for (let i=0; i < lines.length; i++){
-
-        const [a,b,c] = lines[i];
-
-        // iterate through all the combinations
-        for (let i=0; i < lines.length; i++){
-            // now check if all variables (all squares are all X or all O's
-            if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-                return squares[a];
-            }
+    for (const [a, b, c] of lines) {
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return { winner: squares[a]!, line: [a, b, c] };
         }
-
     }
+    return null;
 }

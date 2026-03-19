@@ -1,14 +1,26 @@
 "use client";
 
-// @ts-expect-error: The props are implicitly typed, leading to TypeScript errors.
-function Square({value, onSquareClick }) {
+interface SquareProps {
+    value: string | null;
+    isWinning: boolean;
+    onSquareClick: () => void;
+    disabled: boolean;
+}
+
+function Square({ value, isWinning, onSquareClick, disabled }: SquareProps) {
+    const classes = [
+        "square",
+        value ? value.toLowerCase() : "",
+        isWinning ? "winning" : "",
+    ]
+        .filter(Boolean)
+        .join(" ");
 
     return (
-            <button
-                className="square"
-                onClick={onSquareClick}
-            >{value}
-            </button>
+        <button className={classes} onClick={onSquareClick} disabled={disabled}>
+            {value}
+        </button>
     );
 }
+
 export default Square;
