@@ -64,6 +64,16 @@ body {
     color: #94a3b8;
 }
 
+.status.ai-thinking {
+    color: #a78bfa;
+    animation: pulse-glow-purple 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow-purple {
+    from { text-shadow: 0 0 6px rgba(167, 139, 250, 0.4); }
+    to   { text-shadow: 0 0 20px rgba(167, 139, 250, 0.9); }
+}
+
 @keyframes pulse-glow {
     from { text-shadow: 0 0 8px rgba(251, 191, 36, 0.4); }
     to   { text-shadow: 0 0 24px rgba(251, 191, 36, 0.9); }
@@ -166,6 +176,46 @@ body {
     transform: translateY(0);
     opacity: 0.85;
 }
+
+/* ── Mode toggle ──────────────────────────────────────────────────────────── */
+
+.mode-toggle {
+    display: flex;
+    gap: 0;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50px;
+    padding: 4px;
+}
+
+.mode-btn {
+    padding: 8px 22px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.45);
+    cursor: default;
+}
+
+.mode-btn:not(.active):hover {
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Legacy turn indicator (kept for compatibility) ───────────────────────── */
 
 .turn-indicator {
     display: flex;
